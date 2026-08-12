@@ -840,11 +840,32 @@ function closeSheetPanel() {
     const subWindow = document.querySelector(".adaptive-settings-window");
     const overlay = document.getElementById("sheetOverlay");
     els.tabs.forEach((t) => t.classList.remove("active"));
-    if (subWindow) subWindow.classList.remove("active");
+    if (subWindow) {
+        subWindow.classList.remove("active");
+        subWindow.classList.remove("expanded"); // 닫을 때는 다시 기본(peek) 크기로 리셋
+    }
     if (overlay) overlay.classList.remove("active");
+    updateGripHint();
+}
+
+function updateGripHint() {
+    const subWindow = document.querySelector(".adaptive-settings-window");
+    const hint = document.getElementById("sheetGripHint");
+    if (!subWindow || !hint) return;
+    hint.textContent = subWindow.classList.contains("expanded") ? "작게 보기" : "더 크게 보기";
+}
+
+function toggleSheetExpanded() {
+    const subWindow = document.querySelector(".adaptive-settings-window");
+    if (!subWindow || !subWindow.classList.contains("active")) return;
+    subWindow.classList.toggle("expanded");
+    updateGripHint();
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+    const gripWrap = document.getElementById("sheetGripWrap");
+    if (gripWrap) gripWrap.addEventListener("click", toggleSheetExpanded);
+
     els.tabs.forEach((tab) => {
         tab.addEventListener("click", () => {
             const targetId = tab.getAttribute("data-target");

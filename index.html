@@ -8,7 +8,7 @@
             href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700&family=Noto+Sans+KR:wght@400;700&family=Nanum+Myeongjo:wght@400;700&family=Nanum+Gothic:wght@400;700&family=Gowun+Dodum&display=swap"
             rel="stylesheet" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-        <link rel="stylesheet" href="style.css?v=13" />
+        <link rel="stylesheet" href="style.css?v=14" />
     </head>
     <body class="mobile-theme">
         <header class="canvas-header">
@@ -28,34 +28,62 @@
         </header>
 
         <div class="canvas-top-actions">
-            <button type="button" class="icon-fab icon-fab-sm" id="btnUndo" title="실행 취소" disabled>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14 L4 9 L9 4"></path><path d="M4 9 H14.5 A6.5 6.5 0 0 1 14.5 22 H12"></path></svg>
-            </button>
-            <button type="button" class="icon-fab icon-fab-sm" id="btnRedo" title="다시 실행" disabled>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 14 L20 9 L15 4"></path><path d="M20 9 H9.5 A6.5 6.5 0 0 0 9.5 22 H12"></path></svg>
-            </button>
-            <button type="button" class="icon-fab" id="btnOpenPresets" title="프리셋">☆</button>
-            <button class="btn-export secondary" id="btnCopy">복사</button>
-            <button class="btn-export primary" id="btnSave">저장</button>
+            <div class="top-action-group">
+                <button type="button" class="icon-fab icon-fab-sm" id="btnUndo" title="실행 취소" disabled>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14 L4 9 L9 4"></path><path d="M4 9 H14.5 A6.5 6.5 0 0 1 14.5 22 H12"></path></svg>
+                </button>
+                <button type="button" class="icon-fab icon-fab-sm" id="btnRedo" title="다시 실행" disabled>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 14 L20 9 L15 4"></path><path d="M20 9 H9.5 A6.5 6.5 0 0 0 9.5 22 H12"></path></svg>
+                </button>
+                <button type="button" class="icon-fab" id="btnOpenPresets" title="프리셋">☆</button>
+            </div>
+            <div class="top-action-divider"></div>
+            <div class="top-action-group">
+                <button class="btn-export secondary" id="btnCopy">복사</button>
+                <button class="btn-export primary" id="btnSave">저장</button>
+            </div>
         </div>
 
         <main class="mobile-main">
             <section class="editor-card">
                 <div class="editor-header">
                     <span class="card-title">본문</span>
-                    <div class="editor-toolbar pill-group">
-                        <button id="btnBold" title="굵게">B</button>
-                        <button id="btnItalic" title="기울임">I</button>
-                        <button id="btnQuoteWrap" title="따옴표 감싸기">""</button>
-                        <button id="btnSubText" title="보조 글자색 적용">보조색</button>
+                    <div class="editor-toolbar-icons">
+                        <button id="btnBold" class="tb-icon-btn" title="굵게">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4h8a4 4 0 0 1 0 8H6z"></path><path d="M6 12h9a4 4 0 0 1 0 8H6z"></path></svg>
+                        </button>
+                        <button id="btnItalic" class="tb-icon-btn" title="기울임">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="4" x2="10" y2="4"></line><line x1="14" y1="20" x2="5" y2="20"></line><line x1="15" y1="4" x2="9" y2="20"></line></svg>
+                        </button>
+                        <button id="btnQuoteWrap" class="tb-icon-btn" title="따옴표 감싸기">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M7 7c-2.2 0-4 1.8-4 4v6h6v-6H6.2C6.6 9.4 8.2 8 10 8V7H7zm10 0c-2.2 0-4 1.8-4 4v6h6v-6h-2.8c.4-1.6 2-3 3.8-3V7h-3z"></path></svg>
+                        </button>
+                        <button id="btnSubText" class="tb-icon-btn" title="보조 글자색 적용">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 3 A9 9 0 0 1 12 21 Z" fill="currentColor" stroke="none"></path></svg>
+                        </button>
+                        <span class="tb-divider"></span>
+                        <button id="btnInvertHighlight" class="tb-icon-btn" title="글자색↔배경색 반전">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3 21 7 17 11"></path><path d="M21 7H8a5 5 0 0 0 0 10h1"></path><path d="M7 21 3 17 7 13"></path><path d="M3 17h13a5 5 0 0 0 0-10h-1"></path></svg>
+                        </button>
+                        <button id="btnQuoteLine" class="tb-icon-btn btn-dialogue-line" title="대사 강조선 바">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="4" y1="6" x2="20" y2="6"></line><line x1="4" y1="12" x2="14" y2="12"></line><line x1="4" y1="18" x2="20" y2="18"></line></svg>
+                        </button>
+                        <span class="tb-divider"></span>
+                        <button id="btnClearHighlight" class="tb-icon-btn tb-icon-danger" title="선택 효과 지우기">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"></path><path d="M8 6V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2"></path><path d="M19 6l-1 14a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1L5 6"></path></svg>
+                        </button>
+                        <button id="btnInsertImage" class="tb-icon-btn" title="사진 삽입 (여러 장 한 번에 선택 가능)">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"></rect><circle cx="8.5" cy="9.5" r="1.5"></circle><path d="M21 15l-5-5L5 20"></path></svg>
+                        </button>
+                        <input type="file" id="imageInsertInput" accept="image/*" multiple style="display: none" />
+                    </div>
+                    <div class="editor-toolbar-selects">
                         <select id="selHighlight" class="toolbar-select" title="형광펜 칠하기">
                             <option value="" disabled selected>형광펜</option>
                             <option value="A">형광펜 A</option>
                             <option value="B">형광펜 B</option>
                             <option value="C">형광펜 C</option>
                         </select>
-                        <button id="btnInvertHighlight" title="글자색↔배경색 반전">반전</button>
-                        <button id="btnQuoteLine" class="btn-dialogue-line" title="대사 강조선 바">강조선</button>
                         <select id="selAlign" class="toolbar-select" title="선택한 문단만 정렬 변경 (전체 정렬과 별개)">
                             <option value="" disabled selected>정렬</option>
                             <option value="left">왼쪽</option>
@@ -93,9 +121,6 @@
                             <option value="28">28px</option>
                             <option value="32">32px</option>
                         </select>
-                        <button id="btnClearHighlight" title="선택 효과 지우기" class="text-danger">지우기</button>
-                        <button id="btnInsertImage" title="사진 삽입 (여러 장 한 번에 선택 가능)">사진</button>
-                        <input type="file" id="imageInsertInput" accept="image/*" multiple style="display: none" />
                     </div>
                 </div>
 
@@ -119,7 +144,10 @@
         <div class="sheet-overlay" id="sheetOverlay"></div>
 
         <section class="adaptive-settings-window" id="modalSubWindow">
-            <div class="sheet-grip"></div>
+            <div class="sheet-grip-wrap" id="sheetGripWrap">
+                <div class="sheet-grip"></div>
+                <div class="sheet-grip-hint" id="sheetGripHint">더 크게 보기</div>
+            </div>
             <button type="button" class="sheet-close" id="btnCloseSheet" aria-label="닫기">✕</button>
 
             <div class="tab-panel" id="panel-title">
@@ -662,7 +690,7 @@
 
         <div class="toast" id="toast"></div>
 
-        <script src="presets.js?v=13"></script>
-        <script src="script.js?v=13"></script>
+        <script src="presets.js?v=14"></script>
+        <script src="script.js?v=14"></script>
     </body>
 </html>

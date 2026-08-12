@@ -1,31 +1,34 @@
 :root {
-    /* ===== 카멜리아 2.0 — "잉크 & 파치먼트" 에디토리얼 팔레트 ===== */
-    --bg-main: #f6f1e6;
-    --bg-card: #fffdf8;
-    --text-main: #26212c;
-    --text-muted: #8b8394;
-    --border-color: #e7dfcd;
-    --accent-color: #b3752c;
-    --accent-hover: #96601f;
-    --accent-soft: #f2e3c4;
-    --accent-soft-strong: #ead4a4;
-    --ink-color: #26212c;
+    /* ===== 카멜리아 3.0 — 완전 흑백 모노크롬, 구조적 미니멀 ===== */
+    --bg-main: #f4f4f4;
+    --bg-card: #ffffff;
+    --text-main: #111111;
+    --text-muted: #767676;
+    --border-color: #dcdcdc;
+    --border-strong: #111111;
+    --accent-color: #111111;
+    --accent-hover: #000000;
+    --accent-soft: #eeeeee;
+    --accent-soft-strong: #d8d8d8;
+    --ink-color: #111111;
     --danger-color: #c0392b;
-    --danger-soft: #f6dcd7;
+    --danger-soft: #f7dedb;
 
     --radius-pill: 9999px;
-    --radius-md: 22px;
-    --radius-sm: 13px;
-    --radius-lg: 28px;
-    --shadow-sm: 0 2px 10px rgba(90, 62, 20, 0.07);
-    --shadow-md: 0 14px 34px rgba(76, 52, 16, 0.09);
-    --shadow-lg: 0 26px 54px rgba(46, 30, 10, 0.18);
+    --radius-md: 14px;
+    --radius-sm: 8px;
+    --radius-lg: 16px;
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
+    --shadow-md: 0 6px 20px rgba(0, 0, 0, 0.08);
+    --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.18);
 
-    --transition-base: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-base: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
 
-    --font-display: "Noto Serif KR", "MaruBuri", serif;
+    --font-display: "Pretendard", -apple-system, sans-serif;
 
-    --bottom-bar-height: 82px;
+    --bottom-bar-height: 80px;
+    --drawer-peek-height: 46vh;
+    --drawer-full-height: 80vh;
 }
 
 *,
@@ -270,29 +273,48 @@ body.mobile-theme {
     z-index: 60;
     display: flex;
     align-items: center;
+    gap: 8px;
+}
+
+.top-action-group {
+    display: flex;
+    align-items: center;
     gap: 6px;
 }
 
+.top-action-divider {
+    width: 1px;
+    height: 20px;
+    background-color: var(--border-strong);
+    opacity: 0.5;
+}
+
 .icon-fab {
-    border: none;
+    border: 1.5px solid var(--border-strong);
     background-color: var(--bg-card);
     color: var(--ink-color);
     width: 36px;
     height: 36px;
     border-radius: 50%;
-    box-shadow: 0 6px 16px rgba(60, 40, 10, 0.2);
+    box-shadow: none;
     font-size: 15px;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: transform 0.12s ease, opacity 0.15s ease;
+    transition: transform 0.1s ease, opacity 0.15s ease, background-color 0.15s ease;
+}
+
+.icon-fab:active {
+    background-color: var(--accent-color);
+    color: #ffffff;
+    transform: scale(0.94);
 }
 
 .icon-fab-sm {
     width: 30px;
     height: 30px;
-    box-shadow: 0 4px 12px rgba(60, 40, 10, 0.16);
+    border-width: 1.3px;
 }
 
 .icon-fab:disabled {
@@ -332,8 +354,8 @@ body.mobile-theme {
     left: 50%;
     bottom: calc(var(--bottom-bar-height) + 18px);
     transform: translate(-50%, 12px);
-    background: rgba(38, 33, 44, 0.95);
-    color: #fff8ea;
+    background: rgba(17, 17, 17, 0.94);
+    color: #ffffff;
     padding: 11px 20px;
     border-radius: 99px;
     font-size: 13px;
@@ -439,15 +461,16 @@ body.mobile-theme {
 
 /* ==========================================================================
     UI 개편: 바텀시트 (탭을 누르면 캔버스를 가리지 않고 아래에서 슬라이드 업)
+    - 어둡게 가리는 배경(backdrop)을 없애서, 설정을 조절하는 동안에도
+      캔버스가 계속 밝고 또렷하게 보이도록 함 (탭하면 여전히 닫힘)
     ========================================================================== */
 .sheet-overlay {
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, 0.28);
+    background: transparent;
     z-index: 39;
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.22s ease;
 }
 
 .sheet-overlay.active {
@@ -455,13 +478,27 @@ body.mobile-theme {
     pointer-events: auto;
 }
 
+.sheet-grip-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 6px;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
 .sheet-grip {
     width: 36px;
     height: 4px;
-    background-color: var(--border-color);
+    background-color: var(--border-strong);
     border-radius: 99px;
-    margin: 6px auto 4px;
-    flex-shrink: 0;
+    margin-bottom: 3px;
+}
+
+.sheet-grip-hint {
+    font-size: 10px;
+    color: var(--text-muted);
+    letter-spacing: 0.02em;
 }
 
 
@@ -646,19 +683,70 @@ body.mobile-theme {
 
 .card-title {
     font-family: var(--font-display);
-    font-size: 13px;
+    font-size: 11.5px;
     font-weight: 700;
     color: var(--text-main);
-    letter-spacing: 0.03em;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
 }
 
-.editor-toolbar.pill-group {
+.editor-toolbar-icons {
     display: flex;
     align-items: center;
-    background-color: var(--bg-main);
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-pill);
-    padding: 4px;
+    gap: 2px;
+    flex-wrap: nowrap;
+    width: max-content;
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 2px;
+}
+.editor-toolbar-icons::-webkit-scrollbar {
+    display: none;
+}
+
+.tb-icon-btn {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    background: none;
+    border: none;
+    border-radius: var(--radius-sm);
+    color: var(--text-main);
+    cursor: pointer;
+    transition: var(--transition-base);
+}
+
+.tb-icon-btn:active {
+    background-color: var(--accent-color);
+    color: #ffffff;
+}
+
+.tb-icon-danger {
+    color: var(--danger-color);
+}
+
+.tb-icon-danger:active {
+    background-color: var(--danger-color);
+    color: #ffffff;
+}
+
+.tb-divider {
+    flex-shrink: 0;
+    width: 1px;
+    height: 20px;
+    background-color: var(--border-color);
+    margin: 0 5px;
+}
+
+.editor-toolbar-selects {
+    display: flex;
+    align-items: center;
+    gap: 6px;
     flex-wrap: nowrap;
     width: max-content;
     max-width: 100%;
@@ -666,71 +754,48 @@ body.mobile-theme {
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
 }
-.editor-toolbar.pill-group::-webkit-scrollbar {
+.editor-toolbar-selects::-webkit-scrollbar {
     display: none;
 }
 
-.editor-toolbar.pill-group button,
-.editor-toolbar.pill-group .toolbar-select {
-    white-space: nowrap;
-    flex-shrink: 0;
-}
-
-.editor-toolbar.pill-group button {
-    background: none;
-    border: none;
-    padding: 9px 14px;
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--text-muted);
-    border-radius: var(--radius-pill);
-    cursor: pointer;
-    transition: var(--transition-base);
-}
-
-.editor-toolbar.pill-group button:active {
-    background-color: rgba(0, 0, 0, 0.06);
-    color: var(--text-main);
-}
-
-.editor-toolbar.pill-group button.text-danger:active {
-    background-color: rgba(239, 68, 68, 0.1);
-    color: var(--danger-color);
-}
-
-.editor-toolbar.pill-group .toolbar-select {
+.editor-toolbar-selects .toolbar-select {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-    background: none;
-    border: none;
-    padding: 9px 20px 9px 12px;
-    font-size: 13px;
+    flex-shrink: 0;
+    background-color: var(--bg-main);
+    border: 1px solid var(--border-color);
+    padding: 7px 20px 7px 12px;
+    font-size: 12.5px;
     font-weight: 500;
-    color: var(--text-muted);
-    border-radius: var(--radius-pill);
+    color: var(--text-main);
+    border-radius: var(--radius-sm);
     cursor: pointer;
     outline: none;
     transition: var(--transition-base);
-    max-width: 78px;
+    max-width: 84px;
     overflow: hidden;
     text-overflow: ellipsis;
 
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2364748b'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2.5' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23111111'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2.5' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
     background-position: right 6px center;
     background-size: 10px;
 }
 
+.editor-toolbar-selects .toolbar-select:active {
+    border-color: var(--border-strong);
+}
+
 #selFontSize.toolbar-select {
-    max-width: 56px;
+    max-width: 60px;
 }
 
 #selAlign.toolbar-select {
-    max-width: 62px;
+    max-width: 66px;
 }
 
-.editor-toolbar.pill-group .toolbar-select option {
+.editor-toolbar-selects .toolbar-select option {
     background-color: var(--bg-card);
     color: var(--text-main);
 }
@@ -1002,30 +1067,36 @@ body.mobile-theme {
 
 /* ==========================================================================
     설정 패널 (탭으로 전환되는 영역)
+    - 더 이상 "따로 떠 있는 팝업"이 아니라, 하단 탭바와 하나로 이어붙은
+      패널로 재구성. 기본은 살짝만 올라오는 "peek" 상태이고,
+      손잡이(grip)를 탭하면 훨씬 크게 펼쳐지는 "full" 상태로 전환됨.
     ========================================================================== */
 .adaptive-settings-window {
     position: fixed;
     left: 0;
     right: 0;
-    bottom: 0;
+    bottom: var(--bottom-bar-height);
     z-index: 40;
     width: 100%;
     background-color: var(--bg-card);
-    border-radius: 20px 20px 0 0;
-    box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.18);
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
     border: 1px solid var(--border-color);
     border-bottom: none;
-    padding: 0 18px calc(18px + var(--bottom-bar-height));
-    max-height: 64vh;
+    padding: 0 18px 18px;
+    max-height: var(--drawer-peek-height);
     display: flex;
     flex-direction: column;
     overflow-y: auto;
     transform: translateY(100%);
-    transition: transform 0.28s cubic-bezier(0.32, 0.72, 0, 1);
+    transition: transform 0.26s cubic-bezier(0.32, 0.72, 0, 1), max-height 0.24s ease;
 }
 
 .adaptive-settings-window.active {
     transform: translateY(0);
+}
+
+.adaptive-settings-window.expanded {
+    max-height: var(--drawer-full-height);
 }
 
 /* 태블릿 정도로 넓어지면 바텀바처럼 가운데로 정렬 */
@@ -1052,16 +1123,18 @@ body.mobile-theme {
 
 .panel-section-title {
     font-family: var(--font-display);
-    font-size: 14.5px;
+    font-size: 11.5px;
     font-weight: 700;
-    color: var(--text-main);
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
     margin-bottom: 14px;
     padding-bottom: 8px;
-    text-align: center;
+    text-align: left;
     border-bottom: 1px solid var(--border-color);
-    margin-top: 14px;
-    padding-top: 6px;
-    border-top: 1px solid var(--border-color);
+    margin-top: 18px;
+    padding-top: 0;
+    border-top: none;
 }
 
 .tab-panel > .panel-section-title:first-child {
@@ -1456,7 +1529,7 @@ input[type="file"]::file-selector-button {
     padding-bottom: calc(8px + env(safe-area-inset-bottom, 0px));
     background-color: var(--bg-card);
     border-top: 1px solid var(--border-color);
-    box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.06);
+    box-shadow: 0 -6px 18px rgba(0, 0, 0, 0.05);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1497,8 +1570,8 @@ input[type="file"]::file-selector-button {
 }
 
 .dock-btn.active {
-    background-color: var(--accent-soft) !important;
-    color: var(--accent-hover) !important;
+    background-color: var(--accent-color) !important;
+    color: #ffffff !important;
 }
 
 .dock-export-group {
@@ -1513,7 +1586,7 @@ input[type="file"]::file-selector-button {
     padding: 0 16px;
     font-size: 13px;
     font-weight: 600;
-    border-radius: var(--radius-pill);
+    border-radius: var(--radius-sm);
     cursor: pointer;
     display: inline-flex;
     align-items: center;
@@ -1529,12 +1602,12 @@ input[type="file"]::file-selector-button {
 .btn-export.secondary {
     background-color: var(--bg-card);
     color: var(--text-main);
-    border: 1px solid var(--border-color);
+    border: 1.5px solid var(--border-strong);
 }
 
 .btn-export.primary {
     background-color: var(--accent-color);
-    color: #fffaf0;
+    color: #ffffff;
 }
 
 /* 태블릿 정도로 넓어지면 가운데로 정렬해서 너무 늘어지지 않게 */
